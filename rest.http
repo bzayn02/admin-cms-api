@@ -1,0 +1,7 @@
+##### Admin CMS APIs
+
+### root api
+GET http://localhost:8000/
+
+### Create new user
+GET http://localhost:8000/api/v1/user/
