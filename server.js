@@ -1,8 +1,6 @@
 import dotenv from 'dotenv'
 dotenv.config();
-
 import morgan from 'morgan'
-
 import express from 'express'  //after es6
 const app = express()
 
@@ -17,14 +15,18 @@ mongoClient();
 
 //middlewares
 app.use(morgan("tiny"))
+app.use(helmet())
+app.use(express.json())
+app.use(express.urlencoded())
 
 //load routers
+
 import userRouter from './routers/UserRouter.js'
 
 //use routers
 app.use("/api/v1/user", userRouter)
 
-app.use(helmet())
+
 
 app.use("/", (req, res) => {
     res.json({ message: "Hello World!" })

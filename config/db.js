@@ -13,6 +13,7 @@ const mongoClient = async () => {
         console.log("FAILED TO CONNECT MONGO")
     } catch (error) {
         console.log(error)
+       
     }
 }
 export default mongoClient

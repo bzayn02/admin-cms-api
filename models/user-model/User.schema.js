@@ -3,6 +3,11 @@ import mongoose from 'mongoose'
 
 //fname, lname, dob, email, phone, password, address, gender, role
 const UserSchema = mongoose.Schema({
+    status: {
+        type: String,
+        required:true,
+        default: "Active"
+    },
     fname: {
         type: String,
         required: true,
@@ -16,10 +21,7 @@ const UserSchema = mongoose.Schema({
         max: 20
     },
     dob: {
-        type: Date,
-        required: true,
-        default: "",
-        max: 20
+        type: Date
     },
     email: {
         type: String,
@@ -29,10 +31,13 @@ const UserSchema = mongoose.Schema({
         unique: true,
         index:1
     },
+    isEmailConfirmed: {
+        type: Boolean,
+        default: "false",
+        required:true
+    },
     phone: {
         type: String,
-        required: true,
-        default: "",
         max: 20
     },
     password: {
