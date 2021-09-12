@@ -38,7 +38,7 @@ const UserSchema = mongoose.Schema({
     },
     phone: {
         type: String,
-        max: 20
+        max: 15
     },
     password: {
         type: String,
