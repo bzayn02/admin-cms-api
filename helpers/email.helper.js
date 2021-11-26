@@ -51,11 +51,12 @@ export const sendEmailVerificationLink = (emailObj) => {
   const obj = {
     ...emailObj,
     subject: "Email Confirmation reqreired.",
-    text: `Hi ${fname}, please follow the link below to confirm your email. ${link}`,
+    text: `Hi ${fname}, please follow the link below to confirm your email.
+    <a href="${link}" target="_blank">${link}</a>`,
     html: `
     Hello there, <br />
     Please follow the link below to confirm your email. <br/>
-    <br/>${link}<br/>
+    <br/>  <a href="${link}" target="_blank">${link}</a><br/>
     Thank you
     <br/><br/>
     Kind Regards,

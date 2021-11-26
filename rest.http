@@ -7,11 +7,10 @@ GET http://localhost:8000/
 POST http://localhost:8000/api/v1/user/
 Content-Type: application/json
 
-
 {
     "fname": "Bijay",
     "lname": "Nagarkoti",
-    "email":"bhhafdsaddfdy02@gmail.com",
+    "email":"bijay02@gmail.com",
     "dob": "1997-12-14",
     "password":"12345adafsdf",
     "phone":"0410684026",
@@ -19,13 +18,11 @@ Content-Type: application/json
     "gender":"Male"
 }
 
-
 ### Verify admin email
-PATCH  http://localhost:8000/api/v1/user/email-verification
+PATCH http://localhost:8000/api/v1/user/email-verification
 Content-Type: application/json
 
-
 {
-    "pin":"956039",
-    "email":"bhhafdsaddfdy02@gmail.com"
+    "pin":"312710",
+    "email":"bijay02@gmail.com"
 }

@@ -33,7 +33,7 @@ const UserSchema = mongoose.Schema({
     },
     isEmailConfirmed: {
         type: Boolean,
-        default: "false",
+        default: false,
         required:true
     },
     phone: {
@@ -56,7 +56,7 @@ const UserSchema = mongoose.Schema({
     role: {
         type: String,
         required: true,
-        default: "User"
+        default: "user"
     }
 }
     , {

@@ -12,7 +12,7 @@ export const createUser = newUser => {
 
 export const verifyEmail = email => {
     try {
-        const result = userSchema.findOneAndUpdate({ email }, {
+        const result = UserSchema.findOneAndUpdate({ email }, {
             isEmailConfirmed:true,
         }, {
             new:true
