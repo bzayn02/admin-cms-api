@@ -26,3 +26,31 @@ Content-Type: application/json
     "pin":"312710",
     "email":"bijay02@gmail.com"
 }
+
+
+#Catalog router
+
+### Get all categories or single category
+GET http://localhost:8000/api/v1/category/
+
+### Create new category
+POST http://localhost:8000/api/v1/category
+Content-Type: application/json
+
+{
+    "name":"Home and Garden",
+    "parentCat":null
+}
+
+###Update category
+PATCH  http://localhost:8000/api/v1/category
+Content-Type: application/json
+
+{
+    "_id":"61a068bbe79cb9247602acd6",
+    "name":"Home",
+    "parentCat":"61a06420420955ad81ef1a57"
+}
+
+### Delete category
+DELETE  http://localhost:8000/api/v1/category/61a0ddd54b2e94055b113
