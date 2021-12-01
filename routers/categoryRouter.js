@@ -52,13 +52,15 @@ Router.get('/:_id?', async (req, res) => {
 Router.post('/', newCategoryValidation, async (req, res) => {
   try {
     const slug = slugify(req.body.name, { lower: true });
+    req.body.parentCat = req.body.parentCat ? req.body.parentCat : null;
+    console.log(req.body);
     const result = await addCategory({ ...req.body, slug });
 
     const status = result?._id ? 'success' : 'error';
     const message = result?._id
       ? 'Category has been created successfully'
       : 'Unable to create the category, please try again later';
-    res.send({ status, message });
+    return res.json({ status, message });
   } catch (error) {
     console.log(error.message);
 
@@ -67,7 +69,8 @@ Router.post('/', newCategoryValidation, async (req, res) => {
     if (error.message.includes('E11000 duplicate key error collection')) {
       msg = 'Error, the category already exists.';
     }
-    res.send({
+    console.log(error);
+    res.json({
       status: 'error',
       message: msg,
     });

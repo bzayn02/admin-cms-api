@@ -17,11 +17,11 @@ All user api endpiont will be follwed by `${rootUrl}/api/v1/user`
 
 ### Catalog API endpoints
 
-All catalog api endpiont will be follwed by `${rootUrl}/api/v1/catalog`
+All catalog api endpiont will be follwed by `${rootUrl}/api/v1/category`
 
 | #   | API      | METHOD | DESCRIPTION                                                              |
 | --- | -------- | ------ | ------------------------------------------------------------------------ |
 | 1.  | `/:_id?` | GET    | Get single category if '\_id' is provided, otherwise return all catalogs |
-| 2.  | `/`      | POST   | Create new catalog in database                                           |
-| 2.  | `/`      | PATCH  | Update catalog in database                                               |
-| 2.  | `/:_id`  | DELETE | Create new catalog in database                                           |
+| 2.  | `/`      | POST   | Create new category in database                                          |
+| 2.  | `/`      | PATCH  | Update category in database                                              |
+| 2.  | `/:_id`  | DELETE | Create new category in database                                          |
