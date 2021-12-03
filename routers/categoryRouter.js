@@ -60,7 +60,7 @@ Router.post('/', newCategoryValidation, async (req, res) => {
     const message = result?._id
       ? 'Category has been created successfully'
       : 'Unable to create the category, please try again later';
-    return res.json({ status, message });
+    res.json({ status, message });
   } catch (error) {
     console.log(error.message);
 
