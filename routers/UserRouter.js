@@ -1,20 +1,26 @@
 import express from 'express';
 const Router = express.Router();
-import { createUser, verifyEmail } from '../models/user-model/User.model.js';
+import {
+  createUser,
+  verifyEmail,
+  getUserByEmail,
+} from '../models/user-model/User.model.js';
 import {
   createAdminUserValidation,
+  loginUserFormValidation,
   adminEmailVerificationValidation,
 } from '../middlewares/formValidation.middleware.js';
-import { hashPassword } from '../helpers/bcrypt.helper.js';
+import { hashPassword, comparePassword } from '../helpers/bcrypt.helper.js';
 import {
   createUniqueEmailConfirmation,
   deleteInfo,
   findAdminEmailVerification,
-} from '../models/session/Session.model.js';
+} from '../models/reset-pin/Pin.model.js';
 import {
   sendEmailVerificationConfirmation,
   sendEmailVerificationLink,
 } from '../helpers/email.helper.js';
+import { getJWTs } from '../helpers/jwt.helper.js';
 
 Router.all('/', (req, res, next) => {
   console.log('FROM USER ROUTER');
@@ -114,5 +120,39 @@ Router.patch(
     }
   }
 );
+
+//user login
+Router.post('/login', loginUserFormValidation, async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await getUserByEmail(email);
+
+    if (user?._id) {
+      // check if password is valid or not
+      const isPassMatch = comparePassword(password, user.password);
+      console.log(isPassMatch);
+      if (isPassMatch) {
+        // get JWTs and send to client
+
+        const JWTs = await getJWTs({ _id: user._id, email: user.email });
+        console.log(JWTs);
+        return res.status(200).json({
+          status: 'success',
+          message: 'Login Success',
+          JWTs,
+        });
+      }
+    }
+    res.status(401).json({
+      status: 'error',
+      message: 'Unauthorized',
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: 'Error, unable to login now, please try again later',
+    });
+  }
+});
 
 export default Router;

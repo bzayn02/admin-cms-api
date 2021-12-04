@@ -1,19 +1,16 @@
 import mongoose from 'mongoose';
 
-const SessionSchema = mongoose.Schema(
+const PinSchema = mongoose.Schema(
   {
-    type: {
+    pin: {
       type: String,
-      default: 'accessJWT',
       required: true,
-      max: 20,
     },
 
-    token: {
+    email: {
       type: String,
       required: true,
-      default: null,
-      max: 100,
+      max: 50,
     },
 
     type: {
@@ -27,6 +24,6 @@ const SessionSchema = mongoose.Schema(
   }
 );
 
-const Session = mongoose.model('Session', SessionSchema);
+const Pin = mongoose.model('Pin', PinSchema);
 
-export default Session;
+export default Pin;

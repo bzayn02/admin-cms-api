@@ -94,3 +94,25 @@ export const updateCategoryValidation = (req, res, next) => {
     });
   }
 };
+
+export const loginUserFormValidation = (req, res, next) => {
+  try {
+    const schema = Joi.object({
+      email: email,
+      password: plainShortStr,
+    });
+    const { error } = schema.validate(req.body);
+    if (error) {
+      return res.json({
+        status: 'error',
+        message: error.message,
+      });
+    }
+    next();
+  } catch (error) {
+    res.json({
+      status: 'error',
+      message: 'Error, Unable to process your request, please try again later.',
+    });
+  }
+};

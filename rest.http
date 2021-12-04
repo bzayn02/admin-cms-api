@@ -1,5 +1,7 @@
 ##### Admin CMS APIs
 
+
+##################### User Router ################
 ### root api
 GET http://localhost:8000/
 
@@ -10,9 +12,9 @@ Content-Type: application/json
 {
     "fname": "Bijay",
     "lname": "Nagarkoti",
-    "email":"bijay02@gmail.com",
+    "email":"a@gmail.com",
     "dob": "1997-12-14",
-    "password":"12345adafsdf",
+    "password":"12345678",
     "phone":"0410684026",
     "address":"8/29-30 Mary Street, Lidcombe",
     "gender":"Male"
@@ -26,9 +28,17 @@ Content-Type: application/json
     "pin":"312710",
     "email":"bijay02@gmail.com"
 }
+### User Login
+POST  http://localhost:8000/api/v1/user/login
+Content-Type: application/json
+
+{
+    "email":"a@gmail.com",
+    "password":"12345678"
+}
 
 
-#Catalog router
+######################  Catalog router   ##################
 
 ### Get all categories or single category
 GET http://localhost:8000/api/v1/category/
@@ -54,3 +64,5 @@ Content-Type: application/json
 
 ### Delete category
 DELETE  http://localhost:8000/api/v1/category/61a0ddd54b2e94055b113
+
+
