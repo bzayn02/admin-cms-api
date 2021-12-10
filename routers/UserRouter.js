@@ -130,16 +130,15 @@ Router.post('/login', loginUserFormValidation, async (req, res) => {
     if (user?._id) {
       // check if password is valid or not
       const isPassMatch = comparePassword(password, user.password);
-      console.log(isPassMatch);
       if (isPassMatch) {
         // get JWTs and send to client
-
         const JWTs = await getJWTs({ _id: user._id, email: user.email });
-        console.log(JWTs);
-        return res.status(200).json({
+        user.password = undefined;
+        return res.json({
           status: 'success',
           message: 'Login Success',
           JWTs,
+          user,
         });
       }
     }

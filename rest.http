@@ -66,3 +66,9 @@ Content-Type: application/json
 DELETE  http://localhost:8000/api/v1/category/61a0ddd54b2e94055b113
 
 
+###############   Token Router
+
+### get new access token
+
+GET http://localhost:8000/api/v1/token
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaWF0IjoxNjM5MTA1ODgxLCJleHAiOjE2NDE2OTc4ODF9.qSixbSl5aT3JjPe07vkVn1TgkCigtvEyXUcAwv5KdKQ

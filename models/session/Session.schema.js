@@ -16,10 +16,9 @@ const SessionSchema = mongoose.Schema(
       max: 100,
     },
 
-    type: {
-      type: String,
-      default: 'emailValidation',
-      max: 50,
+    userID: {
+      type: mongoose.Schema.Types.ObjectId,
+      default: null,
     },
   },
   {
