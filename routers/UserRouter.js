@@ -4,12 +4,15 @@ import {
   createUser,
   verifyEmail,
   getUserByEmail,
+  removeRefreshJWT,
 } from '../models/user-model/User.model.js';
+import { removeSession } from '../models/session/Session.model.js';
 import {
   createAdminUserValidation,
   loginUserFormValidation,
   adminEmailVerificationValidation,
 } from '../middlewares/formValidation.middleware.js';
+import { isAdminUser } from '../middlewares/auth.middleware.js';
 import { hashPassword, comparePassword } from '../helpers/bcrypt.helper.js';
 import {
   createUniqueEmailConfirmation,
@@ -28,7 +31,7 @@ Router.all('/', (req, res, next) => {
   next();
 });
 
-Router.post('/', createAdminUserValidation, async (req, res) => {
+Router.post('/', isAdminUser, createAdminUserValidation, async (req, res) => {
   try {
     const hashPass = hashPassword(req.body.password);
 
@@ -145,6 +148,22 @@ Router.post('/login', loginUserFormValidation, async (req, res) => {
     res.status(401).json({
       status: 'error',
       message: 'Unauthorized',
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: 'Error, unable to login now, please try again later',
+    });
+  }
+});
+Router.post('/logout', async (req, res) => {
+  try {
+    const { accessJWT, refreshJWT } = req.body;
+    accessJWT && (await removeSession(accessJWT));
+    refreshJWT && (await removeRefreshJWT(refreshJWT));
+    res.json({
+      status: 'success',
+      message: 'Logging Out...',
     });
   } catch (error) {
     res.status(500).json({

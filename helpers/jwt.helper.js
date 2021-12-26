@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import { storeSession } from '../models/session/Session.model.js';
 import { setRefreshJWT } from '../models/user-model/User.model.js';
 
-export const createAccessJWT = async (_id, email) => {
+export const createAccessJWT = async ({ _id, email }) => {
   const token = jwt.sign({ email }, process.env.JWT_ACCESS_SECRET, {
     expiresIn: '15m',
   });
@@ -36,4 +36,11 @@ export const getJWTs = async ({ _id, email }) => {
 
 export const verifyRefreshJWT = (refreshJWT) => {
   return jwt.verify(refreshJWT, process.env.JWT_REFRESH_SECRET);
+};
+export const verifyAccessJWT = (accessJWT) => {
+  try {
+    return jwt.verify(accessJWT, process.env.JWT_ACCESS_SECRET);
+  } catch (error) {
+    return false;
+  }
 };

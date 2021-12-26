@@ -8,6 +8,7 @@ GET http://localhost:8000/
 ### Create new user
 POST http://localhost:8000/api/v1/user/
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaWF0IjoxNjQwNDc0MjIwLCJleHAiOjE2NDA0NzUxMjB9.eRsJzl46QuMbIpZATmiQK79iD5JsMoKBpaoJJeTeCCU
 
 {
     "fname": "Bijay",
@@ -36,6 +37,14 @@ Content-Type: application/json
     "email":"a@gmail.com",
     "password":"12345678"
 }
+### User Logout
+POST  http://localhost:8000/api/v1/user/logout
+Content-Type: application/json
+
+{
+   "accessJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaWF0IjoxNjQwNTEwNDU5LCJleHAiOjE2NDA1MTEzNTl9.3ECYl_96AQcBsq6pnaa2r99eZrtLcqSqAgKr1LMU54I",
+    "refreshJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaWF0IjoxNjQwNTEwNDU5LCJleHAiOjE2NDMxMDI0NTl9.0ivCUcnkr-P6uNaAShMRmLifTFIzsE_TMp8IO8EI4vA"
+}
 
 
 ######################  Catalog router   ##################
@@ -46,9 +55,10 @@ GET http://localhost:8000/api/v1/category/
 ### Create new category
 POST http://localhost:8000/api/v1/category
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaWF0IjoxNjQwNDc0MjIwLCJleHAiOjE2NDA0NzUxMjB9.eRsJzl46QuMbIpZATmiQK79iD5JsMoKBpaoJJeTeCCU
 
 {
-    "name":"Home and Garden",
+    "name":"Kitchen",
     "parentCat":null
 }
 
