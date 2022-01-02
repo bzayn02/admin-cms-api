@@ -37,13 +37,12 @@ Content-Type: application/json
     "email":"a@gmail.com",
     "password":"12345678"
 }
-### User Logout
-POST  http://localhost:8000/api/v1/user/logout
+### User Logout POST  http://localhost:8000/api/v1/user/logout
 Content-Type: application/json
 
 {
-   "accessJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaWF0IjoxNjQwNTEwNDU5LCJleHAiOjE2NDA1MTEzNTl9.3ECYl_96AQcBsq6pnaa2r99eZrtLcqSqAgKr1LMU54I",
-    "refreshJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaWF0IjoxNjQwNTEwNDU5LCJleHAiOjE2NDMxMDI0NTl9.0ivCUcnkr-P6uNaAShMRmLifTFIzsE_TMp8IO8EI4vA"
+  "accessJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaWF0IjoxNjQwNTExMDk3LCJleHAiOjE2NDA1MTE5OTd9.crWyHVtANMFazj5LT4ZpSiHAPQaSLgcHpPTLlsWjM28",
+    "refreshJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaWF0IjoxNjQwNTExMDk3LCJleHAiOjE2NDMxMDMwOTd9.Y3jOS1tCRSZw8yes--xwg8yHseNcaIDPSXYciNpVB0E"
 }
 
 
@@ -81,4 +80,7 @@ DELETE  http://localhost:8000/api/v1/category/61a0ddd54b2e94055b113
 ### get new access token
 
 GET http://localhost:8000/api/v1/token
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaWF0IjoxNjM5MTA1ODgxLCJleHAiOjE2NDE2OTc4ODF9.qSixbSl5aT3JjPe07vkVn1TgkCigtvEyXUcAwv5KdKQ
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaWF0IjoxNjQwNTIwNjYwLCJleHAiOjE2NDMxMTI2NjB9.bRXBvf2rrBuo9yGp8010hiinlB8KFkmNXmgE82nP_-Q
+
+
+
