@@ -17,15 +17,12 @@ export const isAdminUser = async (req, res, next) => {
       const session = decoded?.email
         ? await getSession({ token: authorization })
         : null;
-      console.log(decoded, session);
       if (session?._id) {
         req.userID = session.userID;
         next();
         return;
       }
-      //else remove the accessJWT from server
     }
-    // next();
     return res.status(401).json({
       status: 401,
       message: 'Unauthenticated!',

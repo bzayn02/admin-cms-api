@@ -53,7 +53,6 @@ Router.post('/', newCategoryValidation, async (req, res) => {
   try {
     const slug = slugify(req.body.name, { lower: true });
     req.body.parentCat = req.body.parentCat ? req.body.parentCat : null;
-    console.log(req.body);
     const result = await addCategory({ ...req.body, slug });
 
     const status = result?._id ? 'success' : 'error';
@@ -62,7 +61,7 @@ Router.post('/', newCategoryValidation, async (req, res) => {
       : 'Unable to create the category, please try again later';
     res.json({ status, message });
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
 
     let msg =
       'Error, Unable to add new category at the moment, please try again later.';
@@ -82,7 +81,6 @@ Router.patch('/', updateCategoryValidation, async (req, res) => {
   try {
     //update database
     const result = await updateCat(req.body);
-    console.log(result);
     if (result?._id) {
       return res.json({
         status: 'success',
@@ -108,7 +106,6 @@ Router.delete('/:_id', async (req, res) => {
   try {
     const { _id } = req.params;
     const result = await deleteCat(_id);
-    console.log(result);
     if (result?._id) {
       return res.json({
         status: 'success',

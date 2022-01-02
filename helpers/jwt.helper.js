@@ -4,7 +4,7 @@ import { setRefreshJWT } from '../models/user-model/User.model.js';
 
 export const createAccessJWT = async ({ _id, email }) => {
   const token = jwt.sign({ email }, process.env.JWT_ACCESS_SECRET, {
-    expiresIn: '1m',
+    expiresIn: '5s',
   });
   // store in db
   const result = await storeSession({ type: 'accessJWT', token, userID: _id });
