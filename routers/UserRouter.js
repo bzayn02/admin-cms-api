@@ -5,6 +5,7 @@ import {
   verifyEmail,
   getUserByEmail,
   removeRefreshJWT,
+  updateUserProfile,
 } from '../models/user-model/User.model.js';
 import { removeSession } from '../models/session/Session.model.js';
 import {
@@ -26,11 +27,19 @@ import {
 import { getJWTs } from '../helpers/jwt.helper.js';
 
 Router.all('/', (req, res, next) => {
-  console.log('FROM USER ROUTER');
-
   next();
 });
 
+// Return user
+Router.get('/', isAdminUser, async (req, res) => {
+  res.json({
+    status: 'success',
+    message: 'User Profile',
+    user: req.user,
+  });
+});
+
+// create new user
 Router.post('/', isAdminUser, createAdminUserValidation, async (req, res) => {
   try {
     const hashPass = hashPassword(req.body.password);
@@ -75,6 +84,35 @@ Router.post('/', isAdminUser, createAdminUserValidation, async (req, res) => {
     res.json({
       status: 'error',
       message: msg,
+    });
+  }
+});
+
+// update user
+Router.patch('/', isAdminUser, async (req, res) => {
+  try {
+    const { _id } = req.user;
+    console.log(_id, req.body);
+
+    if (_id) {
+      const result = await updateUserProfile(_id, req.body);
+
+      if (result?._id) {
+        return res.json({
+          status: 'success',
+          message: 'User profile has been updated successfully.',
+        });
+      }
+    }
+    return res.json({
+      status: 'error',
+      message: 'Unable to update the user. Please try again later.',
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.json({
+      status: 'error',
+      message: 'Error, Unable to update the user.',
     });
   }
 });
@@ -130,7 +168,7 @@ Router.post('/login', loginUserFormValidation, async (req, res) => {
     const { email, password } = req.body;
     const user = await getUserByEmail(email);
 
-    if (user?._id) {
+    if (user?._id && user?.role === 'admin') {
       // check if password is valid or not
       const isPassMatch = comparePassword(password, user.password);
       if (isPassMatch) {
@@ -156,6 +194,7 @@ Router.post('/login', loginUserFormValidation, async (req, res) => {
     });
   }
 });
+// user logout
 Router.post('/logout', async (req, res) => {
   try {
     const { accessJWT, refreshJWT } = req.body;

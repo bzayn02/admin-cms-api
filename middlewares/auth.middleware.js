@@ -1,5 +1,6 @@
 import { verifyAccessJWT } from '../helpers/jwt.helper.js';
 import { getSession } from '../models/session/Session.model.js';
+import { getUserByID } from '../models/user-model/User.model.js';
 
 export const isAdminUser = async (req, res, next) => {
   try {
@@ -18,9 +19,15 @@ export const isAdminUser = async (req, res, next) => {
         ? await getSession({ token: authorization })
         : null;
       if (session?._id) {
-        req.userID = session.userID;
-        next();
-        return;
+        // get the admin user from DB and check for the role
+        const user = await getUserByID(session.userID);
+        if (user?.role === 'admin') {
+          req.user = user;
+          req.user.password = undefined;
+          req.user.refreshJWT = undefined;
+          next();
+          return;
+        }
       }
     }
     return res.status(401).json({
@@ -28,7 +35,7 @@ export const isAdminUser = async (req, res, next) => {
       message: 'Unauthenticated!',
     });
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
     res.status(500).json({
       message: 'Server error!',
     });

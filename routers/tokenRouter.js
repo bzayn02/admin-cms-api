@@ -5,7 +5,6 @@ import { getUserByEmailAndRefreshToken } from '../models/user-model/User.model.j
 const Router = express.Router();
 
 Router.all('/', (req, res, next) => {
-  console.log('token got hit');
   next();
 });
 
@@ -28,7 +27,6 @@ Router.get('/', async (req, res) => {
       if (user?._id) {
         // 3. Create access JWT and store in db
         const accessJWT = await createAccessJWT({ _id: user._id, email });
-        console.log(accessJWT, 'new accessJWT');
 
         // 4. Return the new accessJWT
         return res.json({
