@@ -23,8 +23,7 @@ export const isAdminUser = async (req, res, next) => {
         const user = await getUserByID(session.userID);
         if (user?.role === 'admin') {
           req.user = user;
-          req.user.password = undefined;
-          req.user.refreshJWT = undefined;
+
           next();
           return;
         }

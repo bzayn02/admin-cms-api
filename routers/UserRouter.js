@@ -12,6 +12,7 @@ import {
   createAdminUserValidation,
   loginUserFormValidation,
   adminEmailVerificationValidation,
+  passwordUpdateFormValidation,
 } from '../middlewares/formValidation.middleware.js';
 import { isAdminUser } from '../middlewares/auth.middleware.js';
 import { hashPassword, comparePassword } from '../helpers/bcrypt.helper.js';
@@ -23,6 +24,7 @@ import {
 import {
   sendEmailVerificationConfirmation,
   sendEmailVerificationLink,
+  sendPasswordUpdateNotification,
 } from '../helpers/email.helper.js';
 import { getJWTs } from '../helpers/jwt.helper.js';
 
@@ -32,6 +34,8 @@ Router.all('/', (req, res, next) => {
 
 // Return user
 Router.get('/', isAdminUser, async (req, res) => {
+  req.user.password = undefined;
+  req.user.refreshJWT = undefined;
   res.json({
     status: 'success',
     message: 'User Profile',
@@ -211,5 +215,52 @@ Router.post('/logout', async (req, res) => {
     });
   }
 });
+
+// password reset
+Router.post(
+  '/password-update',
+  isAdminUser,
+  passwordUpdateFormValidation,
+  async (req, res) => {
+    try {
+      const { _id, password, fname, email } = req.user;
+      const { currentPassword } = req.body;
+
+      // make sure the current password matches with the password in database
+
+      const passMatched = comparePassword(currentPassword, password);
+      if (passMatched) {
+        // encrypt the new password and store in db
+        const hashedPass = hashPassword(req.body.password);
+        if (hashedPass) {
+          //update user table
+          const user = await updateUserProfile(_id, { password: hashedPass });
+
+          if (user._id) {
+            res.json({
+              status: 'success',
+              message: 'Password has been updated.',
+            });
+            // send the notification email saying password is updated
+
+            sendPasswordUpdateNotification({ fname, email });
+            return;
+          }
+        }
+      }
+
+      res.json({
+        status: 'error',
+        message:
+          'Error, unable to update the password at the moment. Please try again later.',
+      });
+    } catch (error) {
+      res.json({
+        status: 'error',
+        message: 'Error, unable to process your request.',
+      });
+    }
+  }
+);
 
 export default Router;

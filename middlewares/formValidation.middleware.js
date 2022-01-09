@@ -5,13 +5,14 @@ const shortStr = Joi.string().max(20).alphanum().required();
 const email = Joi.string().max(50).email({ minDomainSegments: 2 }).required();
 const shortStrNull = Joi.string().max(30).allow(null).allow('');
 const _id = Joi.string().max(30);
+const password = Joi.string().min(8).required();
 
 export const createAdminUserValidation = (req, res, next) => {
   const schema = Joi.object({
     fname: shortStr,
     lname: shortStr,
     email: email,
-    password: Joi.string().min(8).required(),
+    password,
     phone: Joi.string().max(20).allow(null).allow(''),
     address: Joi.string().max(100),
     gender: Joi.string().max(6).allow(''),
@@ -99,7 +100,28 @@ export const loginUserFormValidation = (req, res, next) => {
   try {
     const schema = Joi.object({
       email: email,
-      password: plainShortStr,
+      password,
+    });
+    const { error } = schema.validate(req.body);
+    if (error) {
+      return res.json({
+        status: 'error',
+        message: error.message,
+      });
+    }
+    next();
+  } catch (error) {
+    res.json({
+      status: 'error',
+      message: 'Error, Unable to process your request, please try again later.',
+    });
+  }
+};
+export const passwordUpdateFormValidation = (req, res, next) => {
+  try {
+    const schema = Joi.object({
+      currentPassword: password,
+      password,
     });
     const { error } = schema.validate(req.body);
     if (error) {

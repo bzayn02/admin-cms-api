@@ -37,16 +37,26 @@ Content-Type: application/json
     "email":"a@gmail.com",
     "password":"12345678"
 }
-### User Logout POST  http://localhost:8000/api/v1/user/logout
+### User Logout 
+POST  http://localhost:8000/api/v1/user/logout
 Content-Type: application/json
 
 {
   "accessJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaWF0IjoxNjQwNTExMDk3LCJleHAiOjE2NDA1MTE5OTd9.crWyHVtANMFazj5LT4ZpSiHAPQaSLgcHpPTLlsWjM28",
     "refreshJWT": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaWF0IjoxNjQwNTExMDk3LCJleHAiOjE2NDMxMDMwOTd9.Y3jOS1tCRSZw8yes--xwg8yHseNcaIDPSXYciNpVB0E"
 }
+### Admin Password Update
+POST  http://localhost:8000/api/v1/user/password-update
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaWF0IjoxNjQxNzA4ODUxLCJleHAiOjE2NDE3MDk3NTF9.7y4NaLp9QrPnZqbWOjAXtmleVsYM5MMt8uZsZLkZO-I
+
+{
+  "currentPassword":"Aa1*12345dfaff",
+  "password":"1aA!1111"
+}
 
 
-######################  Catalog router   ##################
+######################  Category router   ##################
 
 ### Get all categories or single category
 GET http://localhost:8000/api/v1/category/
