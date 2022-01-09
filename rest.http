@@ -37,6 +37,9 @@ Content-Type: application/json
     "email":"a@gmail.com",
     "password":"12345678"
 }
+
+
+
 ### User Logout 
 POST  http://localhost:8000/api/v1/user/logout
 Content-Type: application/json
@@ -53,6 +56,14 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29t
 {
   "currentPassword":"Aa1*12345dfaff",
   "password":"1aA!1111"
+}
+### Reset new password 
+POST  http://localhost:8000/api/v1/user/reset-password
+Content-Type: application/json
+
+{
+    "otp":122222,
+  "newPassword":"1aA!1111"
 }
 
 
@@ -85,7 +96,7 @@ Content-Type: application/json
 DELETE  http://localhost:8000/api/v1/category/61a0ddd54b2e94055b113
 
 
-###############   Token Router
+##################   Token Router  ##################
 
 ### get new access token
 
@@ -94,3 +105,10 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29t
 
 
 
+### User forgot password OTP request
+POST  http://localhost:8000/api/v1/token/request-otp
+Content-Type: application/json
+
+{
+    "email":"a@gmail.com"
+}

@@ -43,7 +43,7 @@ export const sendEmailVerificationLink = (emailObj) => {
   const link = `http://localhost:3000/email-verification?pin=${pin}&email=${email}`;
   const obj = {
     ...emailObj,
-    subject: 'Email Confirmation reqreired.',
+    subject: 'Email Confirmation required.',
     text: `Hi ${fname}, please follow the link below to confirm your email.
     <a href="${link}" target="_blank">${link}</a>`,
     html: `
@@ -86,6 +86,23 @@ export const sendPasswordUpdateNotification = (emailObj) => {
     html: `
       Hello ${fname}, <br />
       Your passowrd has been updated. If you did not make any change, please contact us immediately.
+      <br/><br/>
+      Thank you
+      <br/><br/>
+      Kind Regards,
+      --Some company information--`,
+  };
+  emailProcessor(obj);
+};
+export const sendPasswordResetOTP = (emailObj) => {
+  const { fname, otp } = emailObj;
+  const obj = {
+    ...emailObj,
+    subject: 'Reset password OTP.',
+    text: `Hi ${fname}, Use the following OTP to reset your password.${otp}. The OTP will expire in 15 minutes.`,
+    html: `
+      Hello ${fname}, <br />
+      Use the following OTP to reset your password.<br/>${otp}<br/> The OTP will expire in 15 minutes.
       <br/><br/>
       Thank you
       <br/><br/>
