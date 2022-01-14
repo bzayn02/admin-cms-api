@@ -62,8 +62,10 @@ POST  http://localhost:8000/api/v1/user/reset-password
 Content-Type: application/json
 
 {
-    "otp":122222,
-  "newPassword":"1aA!1111"
+
+    "otp":"331361",
+    "email":"a@gmail.com",
+  "password":"2aA!2222"
 }
 
 

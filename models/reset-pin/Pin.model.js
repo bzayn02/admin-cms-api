@@ -50,7 +50,7 @@ export const findAdminEmailVerification = async (filterObj) => {
   try {
     // generate random 6 digit numbers
 
-    const result = await PinSchema.findOne(filterObj);
+    const result = await PinSchema.findOne({ filterObj });
     return result;
   } catch (error) {
     throw new Error(error);

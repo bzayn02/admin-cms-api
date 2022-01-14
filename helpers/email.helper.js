@@ -78,7 +78,7 @@ export const sendEmailVerificationConfirmation = (emailObj) => {
 
 // send the email notificatio for passowrd update message
 export const sendPasswordUpdateNotification = (emailObj) => {
-  const { fname } = emailObj;
+  const { fname = 'there' } = emailObj;
   const obj = {
     ...emailObj,
     subject: 'Your password has been updated.',

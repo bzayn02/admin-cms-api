@@ -6,6 +6,7 @@ import {
   getUserByEmail,
   removeRefreshJWT,
   updateUserProfile,
+  updateUserProfileByEmail,
 } from '../models/user-model/User.model.js';
 import { removeSession } from '../models/session/Session.model.js';
 import {
@@ -13,6 +14,7 @@ import {
   loginUserFormValidation,
   adminEmailVerificationValidation,
   passwordUpdateFormValidation,
+  forgetPasswordResetFormValidation,
 } from '../middlewares/formValidation.middleware.js';
 import { isAdminUser } from '../middlewares/auth.middleware.js';
 import { hashPassword, comparePassword } from '../helpers/bcrypt.helper.js';
@@ -96,7 +98,6 @@ Router.post('/', isAdminUser, createAdminUserValidation, async (req, res) => {
 Router.patch('/', isAdminUser, async (req, res) => {
   try {
     const { _id } = req.user;
-    console.log(_id, req.body);
 
     if (_id) {
       const result = await updateUserProfile(_id, req.body);
@@ -216,7 +217,7 @@ Router.post('/logout', async (req, res) => {
   }
 });
 
-// password reset
+// password update when logged in
 Router.post(
   '/password-update',
   isAdminUser,
@@ -244,6 +245,55 @@ Router.post(
             // send the notification email saying password is updated
 
             sendPasswordUpdateNotification({ fname, email });
+            return;
+          }
+        }
+      }
+
+      res.json({
+        status: 'error',
+        message:
+          'Error, unable to update the password at the moment. Please try again later.',
+      });
+    } catch (error) {
+      res.json({
+        status: 'error',
+        message: 'Error, unable to process your request.',
+      });
+    }
+  }
+);
+// password reset when logged out
+Router.post(
+  '/reset-password',
+  forgetPasswordResetFormValidation,
+  async (req, res) => {
+    try {
+      const { otp, password, email } = req.body;
+
+      // validate otp and email exist in db
+      const filter = { pin: otp, email };
+      const hasOtp = await findAdminEmailVerification(filter);
+      if (hasOtp?._id) {
+        // encrypt the new password
+        const hashedPass = hashPassword(password);
+        if (hashedPass) {
+          // update user table with teh new password
+          const user = await updateUserProfileByEmail(email, {
+            password: hashedPass,
+          });
+          if (user?._id) {
+            res.json({
+              status: 'success',
+              message: 'Password has been updated. You may login now.',
+            });
+            // send the notification email saying password is updated
+
+            sendPasswordUpdateNotification({ email });
+
+            // Don't forget to delete the OTP set from db
+            deleteInfo({ filter });
+
             return;
           }
         }
