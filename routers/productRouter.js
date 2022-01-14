@@ -1,19 +1,26 @@
 import express from 'express';
 import slugify from 'slugify';
 
-import { addProduct } from '../models/product/Product.model.js';
+import {
+  addProduct,
+  getProducts,
+  getProductBySlug,
+} from '../models/product/Product.model.js';
 
 import { newProductValidation } from '../middlewares/productFormValidation.middleware.js';
 
 const Router = express.Router();
 
 // Get one or all product
-Router.get('/:slug?', (req, res) => {
+Router.get('/:slug?', async (req, res) => {
   try {
-    //
+    const { slug } = req.params;
+
+    const products = slug ? await getProductBySlug(slug) : await getProducts();
     res.json({
       status: 'success',
-      message: 'TODO, fetch all or one product',
+      message: 'Here are the products.',
+      products,
     });
   } catch (error) {
     res.status(500).json({

@@ -120,20 +120,23 @@ Content-Type: application/json
 ############################## Product Router ##########################
 
 
-### Add new product
+### Fetch single or all products
+GET http://localhost:8000/api/v1/products/
 
+
+### Add new product
 POST  http://localhost:8000/api/v1/products
 Content-Type: application/json
 
 {
-    "title":"Samsung S21",
-    "price":"1800",
+    "title":"iPhone 13 Pro Max",
+    "price":"1900",
     "salePrice":0,
     "saleStartDate":null,
     "saleEndDate":null,
-    "brand":"Samsung",
+    "brand":"Apple",
     "quantity":"100",
-    "description":"Not better than iPhone"
+    "description":"Invincible"
     }
 
 
