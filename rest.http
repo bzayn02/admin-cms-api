@@ -114,3 +114,26 @@ Content-Type: application/json
 {
     "email":"a@gmail.com"
 }
+
+
+
+############################## Product Router ##########################
+
+
+### Add new product
+
+POST  http://localhost:8000/api/v1/products
+Content-Type: application/json
+
+{
+    "title":"Samsung S21",
+    "price":"1800",
+    "salePrice":0,
+    "saleStartDate":null,
+    "saleEndDate":null,
+    "brand":"Samsung",
+    "quantity":"100",
+    "description":"Not better than iPhone"
+    }
+
+
