@@ -129,14 +129,14 @@ POST  http://localhost:8000/api/v1/products
 Content-Type: application/json
 
 {
-    "title":"iPhone 13 Pro Max",
-    "price":"1900",
+    "title":"Iphone",
+    "price":"1800",
     "salePrice":0,
     "saleStartDate":null,
     "saleEndDate":null,
     "brand":"Apple",
     "quantity":"100",
-    "description":"Invincible"
+    "description":"Invincible Phone"
     }
 
 

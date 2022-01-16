@@ -13,6 +13,7 @@ const quantity = Joi.number().max(10000);
 export const newProductValidation = (req, res, next) => {
   try {
     const schema = joi.object({
+      status: Joi.boolean(),
       title,
       price: price.required(),
       salePrice: price,
@@ -21,6 +22,7 @@ export const newProductValidation = (req, res, next) => {
       brand: shortStrNull,
       quantity: quantity.required(),
       description: longStr.required(),
+      category: Joi.array(),
     });
 
     const values = schema.validate(req.body);

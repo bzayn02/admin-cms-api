@@ -15,6 +15,7 @@ const Router = express.Router();
 Router.get('/:slug?', async (req, res) => {
   try {
     const { slug } = req.params;
+    console.log(req.params);
 
     const products = slug ? await getProductBySlug(slug) : await getProducts();
     res.json({
@@ -35,7 +36,6 @@ Router.post('/', newProductValidation, async (req, res) => {
   try {
     const slug = slugify(req.body.title, { lower: true });
     const product = await addProduct({ ...req.body, slug });
-    console.log(product);
 
     product?._id
       ? res.json({
