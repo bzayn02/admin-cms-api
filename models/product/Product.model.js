@@ -11,3 +11,7 @@ export const getProductBySlug = (slug) => {
 export const getProducts = () => {
   return ProductSchema.find();
 };
+
+export const deleteProductById = (_id) => {
+  return ProductSchema.findByIdAndDelete(_id);
+};
