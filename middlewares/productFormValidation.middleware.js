@@ -12,7 +12,6 @@ const quantity = Joi.number().max(10000);
 
 export const newProductValidation = (req, res, next) => {
   try {
-    console.log(req.body);
     const schema = joi.object({
       status: Joi.boolean(),
       title,
@@ -23,7 +22,7 @@ export const newProductValidation = (req, res, next) => {
       brand: shortStrNull,
       quantity: quantity.required(),
       description: longStr.required(),
-      category: Joi.string(),
+      categories: Joi.string(),
     });
 
     const values = schema.validate(req.body);
@@ -33,6 +32,50 @@ export const newProductValidation = (req, res, next) => {
         message: values.error.message,
       });
     }
+
+    req.body.categories = req.body.categories.split(',');
+    next();
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: 'Internal Server Error',
+    });
+  }
+};
+export const updateProductValidation = (req, res, next) => {
+  try {
+    const schema = joi.object({
+      _id,
+      status: Joi.boolean(),
+      title,
+      price: price.required(),
+      salePrice: price,
+      saleStartDate: date.allow('').allow(null),
+      saleEndDate: date.allow('').allow(null),
+      brand: shortStrNull,
+      quantity: quantity.required(),
+      description: longStr.required(),
+      categories: Joi.string(),
+      thumbnail: Joi.string().allow(''),
+      imgToDelete: Joi.string().allow(''),
+      existingImages: Joi.string().allow(''),
+    });
+
+    const values = schema.validate(req.body);
+    if (values.error) {
+      return res.json({
+        status: 'error',
+        message: values.error.message,
+      });
+    }
+
+    req.body.categories = req.body.categories.split(',');
+    req.body.imgToDelete = req.body.imgToDelete
+      ? req.body.imgToDelete.split(',')
+      : [];
+    req.body.existingImages = req.body.existingImages
+      ? req.body.existingImages.split(',')
+      : [];
     next();
   } catch (error) {
     res.status(500).json({

@@ -15,3 +15,7 @@ export const getProducts = () => {
 export const deleteProductById = (_id) => {
   return ProductSchema.findByIdAndDelete(_id);
 };
+
+export const updateProduct = (_id, product) => {
+  return ProductSchema.findByIdAndUpdate(_id, product);
+};

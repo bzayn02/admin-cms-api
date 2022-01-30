@@ -7,9 +7,13 @@ import {
   getProducts,
   getProductBySlug,
   deleteProductById,
+  updateProduct,
 } from '../models/product/Product.model.js';
 
-import { newProductValidation } from '../middlewares/productFormValidation.middleware.js';
+import {
+  newProductValidation,
+  updateProductValidation,
+} from '../middlewares/productFormValidation.middleware.js';
 
 import { isAdminUser } from '../middlewares/auth.middleware.js';
 
@@ -61,8 +65,6 @@ Router.post(
   newProductValidation,
   async (req, res) => {
     try {
-      console.log(req.files);
-
       //file zone
       const files = req.files;
       const images = [];
@@ -96,6 +98,53 @@ Router.post(
           message: "Slug can not be same as the existing product's slug.",
         });
       }
+      res.status(500).json({
+        status: 'error',
+        message: 'Internal Server Error.',
+      });
+    }
+  }
+);
+
+// Update product
+Router.put(
+  '/',
+  upload.array('images', 5),
+  updateProductValidation,
+  async (req, res) => {
+    try {
+      const { existingImages, imgToDelete, _id, ...product } = req.body;
+
+      console.log(product);
+      console.log(req.files);
+      //file zone
+      const files = req.files;
+      let images = [];
+      const basePath = `${req.protocol}://${req.get('host')}/img/products/`;
+
+      // remove the image to be deleted
+      images = existingImages.filter((source) => !imgToDelete.includes(source));
+
+      // new images coming
+      files.map((file) => {
+        const imgFullPath = basePath + file.filename;
+        images.push(imgFullPath);
+      });
+
+      const result = await updateProduct(_id, { ...product, images });
+
+      result?._id
+        ? res.json({
+            status: 'success',
+            message: 'The product has been updated.',
+          })
+        : res.json({
+            status: 'error',
+            message:
+              'Unable to update the product at the moment, please try again later.',
+          });
+    } catch (error) {
+      console.log(error);
       res.status(500).json({
         status: 'error',
         message: 'Internal Server Error.',
