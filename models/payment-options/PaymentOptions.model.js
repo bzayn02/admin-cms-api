@@ -13,3 +13,6 @@ export const getAllPaymentOptions = () => {
 export const removePaymentOptions = (_id) => {
   return PaymentOptionsSchema.findByIdAndDelete(_id);
 };
+export const updatePaymentOptions = ({ _id, status }) => {
+  return PaymentOptionsSchema.findByIdAndUpdate(_id, { status });
+};
