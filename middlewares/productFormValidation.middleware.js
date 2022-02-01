@@ -1,5 +1,4 @@
 import Joi from 'joi';
-import joi from 'joi';
 
 const longStr = Joi.string().max(3000).required();
 const shortStrNull = Joi.string().max(50).allow(null).allow('');
@@ -12,7 +11,7 @@ const quantity = Joi.number().max(10000);
 
 export const newProductValidation = (req, res, next) => {
   try {
-    const schema = joi.object({
+    const schema = Joi.object({
       status: Joi.boolean(),
       title,
       price: price.required(),

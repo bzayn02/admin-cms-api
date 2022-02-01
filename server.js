@@ -27,6 +27,7 @@ import userRouter from './routers/UserRouter.js';
 import categoryRouter from './routers/categoryRouter.js';
 import tokenRouter from './routers/tokenRouter.js';
 import productRouter from './routers/productRouter.js';
+import paymentOptionsRouter from './routers/paymentOptionsRouter.js';
 
 // serve static contents
 const __dirname = path.resolve();
@@ -40,6 +41,7 @@ app.use('/api/v1/user', userRouter);
 app.use('/api/v1/category', isAdminUser, categoryRouter);
 app.use('/api/v1/token', tokenRouter);
 app.use('/api/v1/products', isAdminUser, productRouter);
+app.use('/api/v1/payment-options', isAdminUser, paymentOptionsRouter);
 
 app.use('/', (req, res) => {
   res.json({ message: 'Hello World!' });

@@ -140,3 +140,28 @@ Content-Type: application/json
     }
 
 
+
+
+
+######################   Payment APIs  #####################
+
+
+### Get payment options
+GET http://localhost:8000/api/v1/payment-options
+
+
+### Add new payment options
+POST http://localhost:8000/api/v1/payment-options
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAZ21haWwuY29tIiwiaWF0IjoxNjQzNjMwNTI0LCJleHAiOjE2NDM2MzE0MjR9.-Bg3ZtSZnq_CFAiyH4uAzUlcM-3aCWa6v8vXFWKyPQ4
+Content-Type: application/json
+
+{
+ "status":false,
+ "name":"Bank Transfer",
+ "info":"Please remit the fund to the following account \n ACC: 3438743, BSB:039393"
+}
+
+
+
+
+
